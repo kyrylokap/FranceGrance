@@ -1,4 +1,4 @@
-package com.example.francegrance.controllers;
+package com.example.francegrance.controllers.noAuthControllers;
 
 import com.example.francegrance.repository.UserRepository;
 import com.example.francegrance.service.UserService;

@@ -29,7 +29,9 @@ public class Config {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        return http.authorizeHttpRequests(auth -> auth.requestMatchers("/login","/register").not().authenticated()
+        return http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .requestMatchers("/login","/register").not().authenticated()
                 .anyRequest().authenticated())
                 .formLogin(log->log.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login"))
                 .sessionManagement(session->session.maximumSessions(1).expiredUrl("/login?expired=true")

@@ -31,5 +31,6 @@ public class Fragrance{
     private Double price;
     @Column
     private String photo;
-
+    @Column
+    private Long availableCount;
 }
