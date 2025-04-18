@@ -4,6 +4,8 @@ package com.example.francegrance.repository;
 import com.example.francegrance.models.WishItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface WishListRepository extends JpaRepository<WishItem,Long> {
+import java.util.List;
 
+public interface WishItemRepository extends JpaRepository<WishItem,Long> {
+    List<WishItem> findByUserUsername(String username);
 }

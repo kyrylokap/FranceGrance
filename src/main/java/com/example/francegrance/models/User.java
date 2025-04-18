@@ -4,6 +4,8 @@ package com.example.francegrance.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -15,7 +17,6 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column
     private String username;
     @Column
@@ -23,4 +24,6 @@ public class User{
     @Column
     private String role;
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<WishItem> wishItemList;
 }

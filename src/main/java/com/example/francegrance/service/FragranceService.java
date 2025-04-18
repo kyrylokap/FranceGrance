@@ -13,11 +13,11 @@ public class FragranceService {
     private final FragranceRepository repo;
 
     public String addFragrance(Fragrance f){
-        if (repo.searchFirstByBrandAndCapacityAndPriceAndNameAndType(
+        if (repo.searchFirstByBrandAndCapacityAndPriceAndNameIgnoreCaseAndType(
                 f.getBrand(),
                 f.getCapacity()
                 ,f.getPrice(),
-                f.getName()
+                f.getName().toLowerCase()
                 ,f.getType()) == null){
             repo.save(f);
             return "Added fragrance!";
@@ -26,6 +26,9 @@ public class FragranceService {
     }
 
     public List<Fragrance> getFragranceByName(String name){
-        return repo.getFragrancesByName(name);
+        return repo.getFragrancesByNameIgnoreCase(name.toLowerCase());
+    }
+    public Fragrance getFragranceById(Long id){
+        return repo.findById(id).get();
     }
 }

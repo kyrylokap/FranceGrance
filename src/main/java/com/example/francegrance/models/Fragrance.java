@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Table(name = "fragrance")
 @Data
 @AllArgsConstructor
@@ -33,4 +35,7 @@ public class Fragrance{
     private String photo;
     @Column
     private Long availableCount;
+
+    @OneToMany(mappedBy = "fragrance")
+    private List<WishItem> wishItems;
 }

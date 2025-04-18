@@ -3,12 +3,14 @@ package com.example.francegrance.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "wishlist")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class WishItem {
@@ -17,7 +19,7 @@ public class WishItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fragrance_id")
     private Fragrance fragrance;
 

@@ -9,7 +9,7 @@
 </head>
 <body>
     <form method="post" th:action="@{/admin/findFragrance}">
-        <input type="search" placeholder="Fragrance name" name="name">
+        <input type="text" placeholder="Fragrance name" name="name">
         <button type="submit">Search</button>
     </form>
     <div th:if="${fragrances != null}" id="fragrances-div">
