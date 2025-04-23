@@ -38,4 +38,7 @@ public class Fragrance{
 
     @OneToMany(mappedBy = "fragrance")
     private List<WishItem> wishItems;
+
+    @OneToMany(mappedBy = "fragrance")
+    private List<Order> orders;
 }

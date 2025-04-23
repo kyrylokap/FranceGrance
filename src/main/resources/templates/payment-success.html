@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment successful</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
+</head>
+<body>
+<form method="get" th:action="@{/}">
+    <h1 th:text="${message}" ></h1>
+    <button>Go to main page</button>
+</form>
+
+</body>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url("/images/windows.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+
+    }
+    body,button{
+        font-family: Inter,sans-serif;
+        font-weight: 600;
+    }
+
+
+    h1{
+        flex-wrap: wrap;
+        color: #122f04;
+    }
+    form{
+        padding: 60px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 10px 5px white;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    button{
+        border-radius:10px;
+        width:150px;
+        padding: 10px;
+        background-color: transparent;
+        border: 0;
+        box-shadow: 0 0 10px 5px white;
+        cursor: pointer;
+    }
+
+</style>
+</html>

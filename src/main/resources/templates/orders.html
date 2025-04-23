@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
+</head>
+<body>
+
+<nav style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 120px;position: absolute;top: 0;left: 0;">
+    <a th:if="${role == 'USER'}" th:href="@{/user}" style="cursor: pointer;text-decoration: none">
+        <h1 style="font-size: 30px;margin: 0;display: flex;align-items: center">
+            <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 3 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+            </svg>
+            Back
+        </h1>
+    </a>
+    <a th:if="${role == 'ADMIN'}" th:href="@{/admin}" style="cursor: pointer;text-decoration: none">
+    <h1 style="font-size: 30px;margin: 0;display: flex;align-items: center">
+        <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 3 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+        </svg>
+        Back To Admin Page
+    </h1>
+    </a>
+</nav>
+<main th:object="${orders}" >
+    <div class="order" th:each="order: ${orders}">
+        <div class="created">
+            <p th:text="${order.created_at}"></p>
+        </div>
+        <div class="user">
+            <p th:text="${order.name}"></p>
+            <p th:text="${order.surname}"></p>
+        </div>
+        <div class="place" style="display: flex;align-items: center;justify-content: center;flex-direction: column">
+            <p th:text="${order.country}" ></p>
+            <p th:text="${order.city}" ></p>
+            <div style="display: flex">
+                <p th:text="${order.street}" ></p>
+                <p th:text="${order.building + ' '}" ></p>
+            </div>
+            <div >
+                <p th:text="${order.postalCode}"></p>
+            </div>
+        </div>
+
+        <div class="fragrance">
+            <p th:text="${order.fragrance.brand}"></p>
+            <p th:text="${order.fragrance.name}"></p>
+            <p th:text="${order.fragrance.capacity}"></p>
+        </div>
+        <div class="l1">
+            <p th:text="${order.fragrance.price}" ></p>zl
+        </div>
+    <div th:if="${role == 'USER'}" class="status" style="justify-content: center;">
+        <a>Status:<p th:text="${order.status}"></p></a>
+    </div>
+    <form th:if="${role == 'ADMIN'}" class="status" method="post" th:action="@{/admin/changeStatus}" style="justify-content: left;">
+        <input type="hidden" name="orderId" th:value="${order.id}">
+        <select name="status" >
+            <option >Status</option>
+            <option value="Processing" th:selected="${order.status == 'Processing'}">Processing</option>
+            <option value="Paid" th:selected="${order.status == 'Paid'}">Paid</option>
+            <option value="Accepted" th:selected="${order.status == 'Accepted'}">Accepted</option>
+            <option value="Rejected" th:selected="${order.status == 'Rejected'}">Rejected</option>
+            <option value="Shipped"  th:selected="${order.status == 'Shipped'}">Shipped</option>
+        </select>
+        <button type="submit" class="btn">Change</button>
+    </form>
+        <form method="post" th:action="@{/checkout}" class="status" th:if="${order.status == 'Processing'}">
+            <input type="hidden" name="orderId" th:value="${order.id}">
+            <button type="submit" class="btn">Pay</button>
+        </form>
+    </div>
+
+</main>
+</body>
+<style>
+    button,select{
+        cursor: pointer;
+    }
+    select,option{
+        backdrop-filter: blur(10px);
+        background-color: transparent;
+    }
+    .status a{
+        color: black;
+    }
+    .btn:hover{
+        transition: 0.7s;
+        background-color: #5b5b5b;
+    }
+    .btn,select,option{
+        outline: none;
+        font-family: Inter,sans-serif;
+        font-weight: 800;
+    }
+    .btn{
+        padding: 5px;
+        border-radius: 5px;
+        border: 0;
+        background-color: black;
+        color: white;
+
+    }
+    .status{
+        width: 14%;
+        text-align: center;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+    }
+    select,option{
+        padding: 10px;
+        border-radius: 10px;
+        width: 100%;
+    }
+    .created{
+        width: 8%;
+        min-width: 50px;
+    }
+    .user{
+        width: 14%;
+        min-width: 80px;
+    }
+    .place{
+        min-width: 200px;
+    }
+    .fragrance{
+        min-width: 150px;
+    }
+    .place{
+        width: 27%;
+    }
+    .fragrance{
+        width: 17%;
+    }
+    .created,.user,.place{
+        border-right: 1px solid white;
+    }
+    .l1{
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 5%;
+    }
+    .l1{
+        border-left: 1px solid white;
+    }
+    .l1{
+        border-right: 1px solid white;
+    }
+    .created,.user,.place,.fragrance{
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .created{
+        text-align: center;
+    }
+    main{
+        margin-top: 120px;
+    }
+    .order{
+        border-top:1px solid white;
+        display: flex;
+        width: 100%;
+    }
+    a:visited,a{
+        color: white;
+    }
+
+    p,h1,input::placeholder{
+        font-weight: 1000;
+        font-family: Inter,sans-serif;
+    }
+    p{
+        font-family: Inter,sans-serif;
+        color: black;
+        margin: 0;
+    }
+    h1{
+        font-size: 50px;
+    }
+    body,html{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        background-attachment: fixed;
+        height: 100%;
+        background-image: url("/images/windows.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+</style>
+</html>

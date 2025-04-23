@@ -7,13 +7,19 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class Config {
+@EnableTransactionManagement
+public class Config  implements WebMvcConfigurer {
     private final CustomUserDetailsService userDetailsService;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
@@ -26,16 +32,26 @@ public class Config {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                .requestMatchers("/wishlist/**").hasAuthority("USER")
-                .requestMatchers("/login","/register").not().authenticated()
-                .anyRequest().authenticated())
-                .formLogin(log->log.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login"))
-                .sessionManagement(session->session.maximumSessions(1).expiredUrl("/login?expired=true")
-                .maxSessionsPreventsLogin(true))
+                    .requestMatchers("/images/**", "/css/**", "/js/**", "/favicon.ico", "/").permitAll()
+                    .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                    .requestMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
+                    .requestMatchers("/login","/register").not().authenticated()
+                    .anyRequest().authenticated())
+                .formLogin(
+                        log->log.loginPage("/login")
+                                .defaultSuccessUrl("/").failureUrl("/login"))
+                .sessionManagement(
+                        session->session.maximumSessions(10)
+                                .expiredUrl("/login?expired=true")
+                                .maxSessionsPreventsLogin(true))
                 .exceptionHandling(ex->ex.accessDeniedHandler(accessDeniedHandler))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID"))
                 .build();
-
     }
 
     @Bean
@@ -44,6 +60,13 @@ public class Config {
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/images/**")
+                .addResourceLocations("classpath:/static/images/");
     }
 }

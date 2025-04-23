@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WishItem {
+public class WishItem{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fragrance_id")
     private Fragrance fragrance;
 
@@ -27,4 +27,5 @@ public class WishItem {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 }

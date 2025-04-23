@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
+</head>
+<body>
+<nav  style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 60px;position: absolute;top: 0;left: 0;">
+    <a th:href="@{/user}" style="cursor: pointer;text-decoration: none">
+        <h1 style="font-size: 30px;margin: 0;display: flex;align-items: center">
+            <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 3 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+            </svg>Back</h1>
+    </a>
+</nav>
+
+    <form method="post" th:action="@{/user/orders/process-order}" th:object="${order}">
+        <input type="hidden" name="fragranceId" th:value="${fragranceId}">
+        <h1>Place order</h1>
+        <div id="person-info">
+            <input type="text" placeholder="Name" th:field="${order.name}" required>
+            <input type="text" placeholder="Surname" th:field="${order.surname}" required>
+            <input type="text" placeholder="Phone" name="phone" required>
+            <input type="email" placeholder="Email" name="email" required>
+        </div>
+        <div id="placement">
+            <input type="text" placeholder="Country" th:field="${order.country}" required >
+            <input type="text" placeholder="City" th:field="${order.city}" required>
+            <input type="text" placeholder="Street" th:field="${order.street}" required>
+            <div id="smaller">
+                <input type="text" placeholder="Building" th:field="${order.building}" required>
+                <input type="text" placeholder="Postal code" th:field="${order.postalCode}" required >
+            </div>
+        </div>
+        <button type="submit">Place order</button>
+    </form>
+</body>
+<style>
+    form div{
+        background-color: transparent;
+    }
+
+
+    body,html{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        height: 100vh;
+        background-image: url("/images/windows.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    body,form,#person-info,#placement,#smaller{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    body,form,#person-info,#placement{
+        flex-direction: column;
+    }
+
+    input,button{
+        margin: 10px;
+        padding: 10px;
+    }
+    button{
+        width: 90%;
+        background-color: black;
+    }
+    form{
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        width: 350px;
+        padding-bottom: 20px;
+        box-shadow: 0 0 20px 15px white;
+    }
+    h1,input::placeholder,input,button{
+        font-family: Inter,sans-serif;
+        font-weight: 1000;
+    }
+    button{
+        color: white;
+    }
+    input::placeholder,input,form h1{
+        color: black;
+    }
+    h1{
+        font-size: 60px;
+        text-align: center;
+        color: white;
+    }
+
+    #smaller{
+        flex-direction: row;
+
+    }
+    #smaller input{
+        width: 100px;
+    }
+    button:hover{
+        box-shadow: 0 0 10px 5px black;
+        transition: 0.7s;
+    }
+    button,input{
+
+        border: 0;
+        outline: none;
+    }
+    input{
+        border-radius: 10px;
+        box-shadow: 0 0 10px 5px white;
+        background-color: transparent;
+    }
+    input:hover{
+        box-shadow: 0 0 15px 10px white;
+        transition: 0.7s;
+    }
+    input:hover::placeholder{
+        transition: 0.7s;
+    }
+</style>
+</html>

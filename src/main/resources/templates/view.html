@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Remove fragrance</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
+</head>
+<body>
+
+<nav th:replace="add :: navD"></nav>
+<div id="main">
+    <form id="search" th:action="@{/admin/search}" method="post">
+        <input type="search" placeholder="Search fragrance..." autocomplete="off" name="name" >
+        <button type="submit" id="search-button">
+            <svg style="color: black" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+        </button>
+    </form>
+
+
+    <div th:object="${fragrances}" id="fragrances">
+        <div th:each="fr: ${fragrances}" class="wish-item">
+            <img th:src="${fr.photo}" alt="fragrance photo" class="wish-photo"/>
+            <div class="inf">
+                <p th:text="${fr.name}" class="pp" ></p>
+                <p th:text="${fr.type}" class="pp"></p>
+                <p th:text="${fr.brand}" class="pp"></p>
+                <p th:text="${fr.capacity}" class="pp"></p>
+                <p th:text="${fr.availableCount}" class="pp"></p>
+                <div id="price" >
+                    <p th:text="${fr.price}"></p>
+                    <p>zl</p>
+                </div>
+            </div>
+            <div class="buttons">
+                <form th:action="@{/admin/removed}"  class="btn-form" method="post">
+                    <input type="hidden" th:value="${fr.id}" name="id">
+                    <button class="btn"   type="submit">Remove</button>
+                </form>
+                <form th:action="@{/admin/process-update}"  class="btn-form" method="post">
+                    <input type="hidden" th:value="${fr.id}" name="id">
+                    <button class="btn"   type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<style>
+    .buttons,.btn-form{
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        flex-direction: row;
+        width: 100%;
+    }
+    h1, p {
+        margin-left: 20px;
+        font-size: 50px;
+        font-weight: 1000;
+    }
+    h1:hover{
+        color: #a5a5a5;
+        transition: 0.7s;
+    }
+
+    .pp, .inf p {
+        font-size: 19px;
+        font-weight: 600;
+    }
+
+    .pp {
+        padding-left: 5px;
+        margin-left: 5px;
+        -webkit-line-clamp: 1;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    nav,#fragrances,.wish-item,#price,.btn-form{
+        display: flex;
+    }
+    #price,#fragrances,nav{
+        flex-direction: row;
+    }
+
+    #fragrances,.wish-item,#price,nav{
+        align-items: center;
+    }
+    nav {
+        justify-content: space-between;
+    }
+
+    nav {
+        height: 120px;
+    }
+
+    a, a:visited {
+        text-decoration: none;
+    }
+
+    option,select{
+        backdrop-filter: blur(10px);
+    }
+    button{
+        background-color: transparent;
+        font-family: Inter, sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        margin: 20px;
+        padding: 7px;
+
+        cursor: pointer;
+    }
+    .btn {
+        border-radius: 10px;
+    }
+        button,nav,a, a:visited {
+            color: white;
+        }
+
+        body {
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url("/images/windows.jpg");
+            font-family: Inter, sans-serif;
+            height: 100vh;
+        }
+
+        body, html ,.pp, .inf p {
+            margin: 0;
+            padding: 0;
+        }
+        #main{
+            margin-top: 120px;
+        }
+        #search {
+            width: 90%;
+        }
+        #search input:hover,
+        .btn:hover,
+        select:hover {
+            transition: 0.7s;
+            box-shadow: 0 0 15px 10px #ffffff;
+        }
+        #search input,.btn,select{
+            border: 0;
+            box-shadow: 0 0 10px 5px #ffffff;
+        }
+        select{
+            outline: 0;
+        }
+        #search input:hover,.btn:hover,select{
+            box-shadow: 0 0 15px 10px #ffffff;
+        }
+        #search-button{
+            border: 0;
+            border-left: 4px solid white;
+        }
+        #search input, #search input::placeholder {
+            backdrop-filter: blur(10px);
+            background-color: transparent;
+            outline: none;
+            font-family: Inter, sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        #search-button{
+            transform: translateX(-146px);
+        }
+        #search input , #search-button{
+            padding: 15px;
+        }
+        #search input{
+            width: 40%;
+            margin-left: 10px;
+            border-radius: 10px;
+        }
+
+
+        #fragrances {
+            flex-wrap: wrap;
+            justify-content: left;
+            gap: 20px;
+        }
+
+        .wish-item, .wish-photo {
+            margin: 10px;
+            padding: 10px;
+        }
+
+
+        .wish-item {
+            flex-direction: column;
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 200px;
+            height: 520px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+        }
+
+        .wish-photo {
+            height: 60%;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+
+        #price,body{
+            justify-content: center;
+        }
+        .btn-form{
+            width: 50%;
+        }
+        .inf,.wish-photo{
+            width: 100%;
+        }
+        .inf {
+            text-align: left;
+        }
+
+        #btn-form button{
+            width: 240px;
+            border: 1px solid black;
+
+        }
+        #search input::placeholder, #search input::placeholder,option,select,.pp, .inf p{
+            color: black;
+        }
+
+        .btn-form button {
+            background-color: black;
+        }
+    
+
+
+</style>
+
+</html>

@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
 </head>
 <body>
     <form action="/register" method="post" id="register">
         <h1>Register</h1>
-        <input type="text" name="username" required>
-        <input type="password" name="password" required>
-        <input type="password" name="confirmedPassword" required>
+        <input type="text" name="username" autocomplete="off" required placeholder="Username">
+        <input type="email" name="email" required placeholder="Email">
+        <input type="password" name="password" required placeholder="Password">
+        <input type="password" name="confirmedPassword" required placeholder="Confirm password">
+
         <button type="submit">Register</button>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <div th:if="${param.error}" id="err">
-            <p>Passwords or username error</p>
+        <div th:if="${err}" name="err" id="err">
+            <p th:text="${err}"></p>
         </div>
     </form>
 </body>
 <style>
+    h1{
+        font-size: 90px;
+    }
+    input::placeholder,button,input,#err,h1{
+        font-family: Inter,sans-serif;
+        font-weight: 1000;
+        color: black;
+    }
+    input::placeholder,button,input,#err{
+        font-size: 17px;
+        text-align: center;
+    }
     body{
         height: 100vh;
+        margin: 0;
+        background-image: url("/images/home.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
     }
     body,#register{
         display: flex;
@@ -27,8 +46,46 @@
         align-items: center;
         justify-content: center;
     }
+
+    #register{
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 15px 10px #ffffff;
+        padding: 20px;
+
+    }
+    input,#register{
+        border-radius: 10px;
+    }
+    input,button{
+        width: 90%;
+        margin: 20px;
+        padding: 10px;
+    }
+    button{
+        cursor: pointer;
+        background-color: black;
+        color: white;
+    }
     #err{
         color: red;
     }
+    input{
+        background-color: transparent;
+        box-shadow: 0 0 10px 5px white;
+        outline: none;
+    }
+    input,button{
+        transition: 0.7s;
+        border: 0;
+    }
+    button:hover{
+        color: darkgray;
+        box-shadow: 0 0 10px 5px white;
+    }
+
+    input:hover{
+        box-shadow: 0 0 15px 10px white;
+    }
+
 </style>
 </html>

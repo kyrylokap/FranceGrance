@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User info</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
+</head>
+<body>
+<nav>
+    <div id="nav-cont" th:fragment="navv" style="display: flex;justify-content:end ;align-items: end;padding-left: 15px">
+        <div style="cursor: pointer;padding-right:10px ;">
+            <a href="/" ><h1 style="font-weight: 400;">Main Page</h1></a>
+        </div>
+        <div style="cursor: pointer;padding-right:10px ;">
+            <a th:href="@{/user/orders}"><h1 style="font-weight: 400;">My orders</h1></a>
+        </div>
+        <div th:if="${role}" style="cursor: pointer;padding-right:10px ;">
+            <a href="/admin"><h1 style="font-weight: 400;">Admin page</h1></a>
+        </div>
+
+        <div th:if="${#authentication.name != 'anonymousUser'}" style="cursor: pointer;padding-right:10px ;">
+            <a href="/user" ><h1 style="font-weight: 400;" th:text="${#authentication.getName().toUpperCase()}"></h1></a>
+        </div>
+
+    </div>
+    <div th:if="${#authentication.name != 'anonymousUser'}">
+        <form method="post" th:action="@{/logout}">
+            <button id="logout" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>
+<div id="main">
+    <h1>Wishlist</h1>
+    <div id="wish-info" th:object="${user}">
+            <div th:each="wish: ${user.getWishItemList()}" class="wish-item">
+                    <img th:src="${wish.fragrance.photo}" alt="fragrance photo" class="wish-photo"/>
+                    <div class="inf">
+                        <p th:text="${wish.fragrance.name}" class="pp" ></p>
+                        <p th:text="${wish.fragrance.type}" class="pp"></p>
+                        <p th:text="${wish.fragrance.brand}" class="pp"></p>
+                        <p th:text="${wish.fragrance.capacity}" class="pp"></p>
+                        <p th:text="${wish.fragrance.availableCount}" class="pp"></p>
+                        <div id="price" >
+                            <p th:text="${wish.fragrance.price}"></p>
+                            <p>zl</p>
+                        </div>
+                        <div class="buttons">
+                            <form th:action="@{/user/orders/order}" method="post" >
+                                <input type="hidden" th:value="${wish.fragrance.id}" name="fragranceId">
+                                <button class="btn" id="btn-buy" type="submit">Order</button>
+                            </form>
+                            <form th:action="@{/user/remove}"  method="post" >
+                                <input type="hidden" th:value="${wish.fragrance.id}" name="id">
+                                <button class="btn" type="submit" id="btn-remove">Remove</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<style>
+    #nav-cont div h1{
+        border-bottom:2px solid #4680ff;
+        transition:0.7s;
+    }
+
+    #nav-cont div h1:hover{
+        border-bottom:2px solid black ;
+    }
+    nav{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          background-color: #4680ff;
+          color: transparent;
+          height: 120px;
+      }
+
+    nav h1:hover,.btn:hover,#logout:hover{
+        transition: 0.7s;
+    }
+    #btn-remove{
+        border: 2px solid #3e0e13;
+    }
+    #btn-buy{
+        border: 2px solid #0f480c;
+    }
+    #btn-remove:hover{
+        box-shadow: 0 0 5px 5px #3e0e13;
+        border: 2px solid #3e0e13;
+        color: #3e0e13;
+    }
+    #btn-buy:hover{
+        box-shadow: 0 0 5px 5px #0f480c;
+        border: 2px solid #0f480c;
+    }
+    .pp{
+        padding-left: 5px;
+        margin-left: 5px;
+        -webkit-line-clamp: 1;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .inf{
+        text-align: start;
+    }
+    form{
+        min-width: 95px;
+        margin: 10px;
+    }
+
+    .btn{
+        background-color:transparent;
+        font-family: Inter,sans-serif;
+        font-size: 18px;
+        font-weight: 1000;
+        padding: 5px;
+        width: 100%;
+        border-radius: 7px;
+        outline: 0;
+    }
+    .buttons{
+        min-width: 190px;
+        text-align: center;
+    }
+    #main{
+        text-align: center;
+    }
+    .wish-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 10px;
+        max-width: 200px;
+        min-width: 200px;
+        max-height: 520px;
+        min-height: 520px;
+        text-align: center;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(4px);
+    }
+
+    #wish-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        gap: 20px;
+    }
+    .wish-photo {
+        width: 100%;
+        height: 60%;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    #price{
+        justify-content: center;
+    }
+    .wish-item,.wish-photo{
+        margin: 10px;
+        padding: 10px;
+    }
+    body{
+        background-position: center;
+        background-attachment: fixed;
+        font-family: Inter,sans-serif;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("/images/windows.jpg");
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+    /*nav,*/#wish-info,#price,.buttons{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    h1,a{
+        font-weight: 1000;
+        font-size: 30px;
+    }
+    a{
+        text-decoration: none;
+    }
+    p{
+        margin-left: 20px;
+
+    }
+    p{
+        font-weight: 600;
+        padding: 5px;
+    }
+    a,.btn{
+        cursor: pointer;
+    }
+    a:visited,h1,#logout,h1,a,.btn{
+        color: white;
+    }
+    #logout:hover{
+        box-shadow: 0 0 15px 10px #ffffff;
+    }
+    #logout{
+        box-shadow: 0 0 10px 5px #ffffff;
+        border: 0;
+        background-color: transparent;
+        font-family: Inter,sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        margin: 20px;
+        min-width: 120px;
+        padding: 7px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    p,a{
+        padding: 0;
+        margin: 0;
+        font-size: 19px;
+    }
+</style>
+</html>

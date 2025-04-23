@@ -2,27 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add fragrance</title>
+    <title>Update fragrance</title>
     <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
 </head>
 <body>
 
-<nav th:fragment="navD" style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 60px;position: absolute;top: 0;left: 0;">
-    <a th:href="@{/admin}" style="cursor: pointer;text-decoration: none">
+<nav  style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 60px;position: absolute;top: 0;left: 0;">
+    <a th:href="@{/admin/view}" style="cursor: pointer;text-decoration: none">
         <h1 style="font-size: 30px;margin: 0;display: flex;align-items: center">
             <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 3 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
-        </svg> To Admin Page</h1>
+                <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 3 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+            </svg> To Admin View</h1>
     </a>
 </nav>
 
-    <div id="div-add" >
-        <form th:action="@{/admin/add}" method="post" th:object="${fragrance}" >
-            <h1>Add fragrance</h1>
-            <input type="text" placeholder="Name" th:field="${fragrance.name}">
-            <input type="text" placeholder="Brand" th:field="${fragrance.brand}">
-            <input type="text" placeholder="Designer" th:field="${fragrance.designer}">
-            <select th:field="${fragrance.type}">
+<div id="div-add" >
+    <form th:action="@{/admin/update}" method="post" th:object="${fragrance}">
+        <input type="hidden"  th:field="*{id}">
+        <h1>Update fragrance</h1>
+        <input type="text" placeholder="Name" th:field="${fragrance.name}" >
+
+        <input type="text" placeholder="Brand" th:field="${fragrance.brand}">
+
+
+        <input type="text" placeholder="Designer" th:field="${fragrance.designer}" >
+
+
+        <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;width:100%;">
+            <select th:field="${fragrance.type}" >
                 <option value="" disabled selected>Choose type</option>
                 <option value="Elixir">Elixir</option>
                 <option value="Perfume">Perfume</option>
@@ -30,20 +37,24 @@
                 <option value="Eau de Toilette">Eau de Toilette</option>
                 <option value="Cologne">Cologne</option>
             </select>
-            <input type="text" placeholder="Capacity" th:field="${fragrance.capacity}">
-            <input type="text" placeholder="Price" th:field="${fragrance.price}">
-            <input type="text" placeholder="Photo" th:field="${fragrance.photo}">
+        </div>
+
+        <input type="text" placeholder="Capacity" th:field="${fragrance.capacity}" >
+
+
+        <input type="text" placeholder="Price" th:field="${fragrance.price}" >
+
+        <input type="text" placeholder="Photo" th:field="${fragrance.photo}" >
+
             <div style="width: 100%;flex-direction: row;display: flex;justify-content: center;align-items: center;border: 1px solid white;border-radius: 30px" >
-                <input type="range" id="range"  th:field="${fragrance.availableCount}" min="1" max="200" style="width: 50%">
+                <input type="range" id="range"  th:field="${fragrance.availableCount}"  min="1" max="200" style="width: 50%">
                 <div style="margin: 10px;"><p id="count" ></p></div>
             </div>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <button type="submit">Add</button>
-        </form>
-        <div id="info">
-            <p th:text="${info}"></p>
-        </div>
-    </div>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Change</button>
+    </form>
+</div>
 </body>
 <style>
     a:visited,a{
@@ -66,7 +77,7 @@
         border: 1px solid #ffffff;
     }
     select,input{
-        width: 100%;
+        width: 50%;
         height: 30px;
     }
 

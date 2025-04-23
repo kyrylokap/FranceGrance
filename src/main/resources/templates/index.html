@@ -2,10 +2,287 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Main</title>
+    <title>FranceGrance</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
+
 </head>
 <body>
-    <h1>Main Page</h1>
-    <p th:text="${#authentication.getName()}"></p>
+
+    <nav th:fragment="navMain">
+        <div id="nav-cont" th:fragment="navv" style="display: flex;justify-content:end ;align-items: end;padding-left: 15px">
+
+            <div style="cursor: pointer;padding-right:10px ;">
+                <a href="/" ><h1 style="font-weight: 400;">Main Page</h1></a>
+            </div>
+            <div style="cursor: pointer;padding-right:10px;" th:if="${#authentication.name != 'anonymousUser'}">
+                <a th:href="@{/user/orders}"><h1 style="font-weight: 400;">My orders</h1></a>
+            </div>
+            <div th:if="${role}" style="cursor: pointer;padding-right:10px ;">
+                <a href="/admin"><h1 style="font-weight: 400;">Admin page</h1></a>
+            </div>
+            <div th:if="${#authentication.name != 'anonymousUser'}" style="cursor: pointer;padding-right:10px ;">
+                <a href="/user" ><h1 style="font-weight: 400;" th:text="${#authentication.getName().toUpperCase()}"></h1></a>
+            </div>
+
+
+        </div>
+        <div th:if="${#authentication.name == 'anonymousUser'}" class="auth">
+            <form method="get" th:action="@{/login}">
+                <button type="submit" class="unuseful">Login</button>
+            </form>
+            <form method="get" th:action="@{/register}">
+                <button type="submit" class="unuseful">Register</button>
+            </form>
+        </div>
+        <div th:if="${#authentication.name != 'anonymousUser'}">
+            <form method="post" th:action="@{/logout}">
+                <button type="submit" class="unuseful">Logout</button>
+            </form>
+        </div>
+
+    </nav>
+    <div id="main">
+        <form id="search" th:action="@{/search}" method="get">
+            <div th:fragment="iForm">
+                <input type="search" placeholder="Search fragrance..." autocomplete="off" name="fragranceName" >
+                <button type="submit" id="search-button">
+                    <svg style="color: black" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                </button>
+                <select name="filter">
+                    <option value="0">Filters</option>
+                    <option value="1">From lower price</option>
+                    <option value="2">From higher price</option>
+                    <option value="3">Eau de Toilette's</option>
+                    <option value="4">Eau de Perfume's</option>
+                    <option value="5">Perfume's</option>
+                    <option value="6">From lower capacity</option>
+                </select></div>
+
+        </form>
+
+
+        <div id="wish-info" th:object="${user}">
+            <div th:each="fr: ${fragrances}" class="wish-item">
+                <img th:src="${fr.photo}" alt="fragrance photo" class="wish-photo"/>
+                <div class="inf">
+                    <p th:text="${fr.name}" class="pp" ></p>
+                    <p th:text="${fr.type}" class="pp"></p>
+                    <p th:text="${fr.brand}" class="pp"></p>
+                    <p th:text="${fr.capacity}" class="pp"></p>
+                    <p th:text="${fr.availableCount}" class="pp"></p>
+                    <div id="price" >
+                        <p th:text="${fr.price}"></p>
+                        <p>zl</p>
+                    </div>
+                </div>
+                <form th:action="@{/user/add}" method="post" id="btn-form">
+                    <input type="hidden" th:value="${fr.id}" name="fr">
+                    <button class="unuseful" id="btn-buy">Add to wishlist</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
+
+<style>
+    #nav-cont div h1{
+        border-bottom:2px solid #4680ff;
+
+    }
+
+    #nav-cont div h1:hover{
+        border-bottom:2px solid black ;
+        transition:0.7s;
+    }
+    h1,p{
+        font-weight: 1000;
+    }
+
+    h1{
+        font-size: 30px;
+
+    }
+
+
+    .pp {
+        font-size: 19px;
+        font-weight: 400;
+    }
+
+    .pp {
+        padding-left: 5px;
+        margin-left: 5px;
+        -webkit-line-clamp: 1;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    nav, .auth,#wish-info,.wish-item,#price,#btn-form{
+        display: flex;
+    }
+    #price,#wish-info,nav, .auth{
+        flex-direction: row;
+    }
+
+    #wish-info,.wish-item,#price,nav, .auth{
+        align-items: center;
+    }
+    nav, .auth {
+        justify-content: space-between;
+    }
+
+    nav {
+        background-color: #4680ff;
+        height: 120px;
+    }
+
+    a, a:visited {
+        text-decoration: none;
+    }
+
+    option,select{
+        backdrop-filter: blur(10px);
+    }
+    button,select,option{
+        background-color: transparent;
+        font-family: Inter, sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        margin: 20px;
+        min-width: 120px;
+        padding: 7px;
+        cursor: pointer;
+    }
+    .unuseful,select,option{
+
+        border-radius: 10px;
+    }
+    button,nav,a, a:visited {
+        color: white;
+    }
+
+    body {
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("/images/windows.jpg");
+        font-family: Inter, sans-serif;
+        height: 100vh;
+    }
+
+    body, html ,.pp, .inf p {
+        margin: 0;
+        padding: 0;
+    }
+
+    #search {
+        width: 90%;
+    }
+    #search input:hover,
+    .unuseful:hover,
+    select:hover {
+        transition: 0.7s;
+        box-shadow: 0 0 15px 10px #ffffff;
+    }
+    .unuseful,select{
+        border: 0;
+        box-shadow: 0 0 10px 5px #ffffff;
+    }
+    #search input{
+        border: 0;
+    }
+    select{
+        outline: 0;
+    }
+
+
+    #search input, #search input::placeholder {
+        backdrop-filter: blur(10px);
+        background-color: transparent;
+        outline: none;
+        font-family: Inter, sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+    }
+    #search-button{
+        transform: translateX(-146px);
+        border-top: 0;
+        border-left: 3px solid white;
+        border-right: 0;
+        border-bottom: 0;
+        border-bottom-right-radius:  10px;
+        border-top-right-radius:  10px;
+    }
+    #search input , #search-button{
+        padding: 15px;
+    }
+    #search input{
+        box-shadow: 0 0 10px 5px white;
+        border-radius: 20px;
+        width: 40%;
+        margin-left: 10px;
+    }
+
+
+    #wish-info {
+        flex-wrap: wrap;
+        justify-content: left;
+        gap: 20px;
+    }
+
+    .wish-item, .wish-photo {
+        margin: 10px;
+        padding: 10px;
+    }
+
+
+    .wish-item {
+        flex-direction: column;
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 200px;
+        height: 520px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(4px);
+    }
+
+    .wish-photo {
+        height: 60%;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+
+    #price,body{
+        justify-content: center;
+    }
+
+    #btn-form,.inf,.wish-photo{
+        width: 100%;
+    }
+    .inf {
+        text-align: left;
+    }
+
+    #btn-form button{
+        width: 240px;
+        border: 1px solid black;
+
+    }
+    #search input::placeholder, #search input::placeholder,option,select,.pp, .inf p{
+        color: black;
+    }
+
+    #btn-form button {
+        background-color: black;
+    }
+
+
+</style>
 </html>

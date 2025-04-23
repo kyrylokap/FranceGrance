@@ -3,16 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/svg+xml">
 </head>
-<body>
-<form action="/login" method="post" style="justify-content: center;align-items: center;display: flex;flex-direction: column">
-    <input type="text" name="username">
-    <input type="password" name="password">
+<body >
+<form action="/login" method="post" >
+    <h1>Login</h1>
+    <input type="text" name="username" autocomplete="off" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <button>Login</button>
     <div th:if="${param.error}">
         <p style="color: red">Bad password or username</p>
     </div>
+    <button>Login</button>
 </form>
 </body>
+<style>
+    h1{
+        font-size: 90px;
+        font-weight: 1000;
+        color: black;
+    }
+    form{
+        font-family: Inter,sans-serif;
+        border-radius: 30px;
+        padding: 40px;
+        justify-content: space-between;
+        background-color: transparent;
+        box-shadow: 0 0 15px 10px #ffffff;
+        backdrop-filter: blur(10px);
+    }
+    form,body{
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+    body{
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("/images/home.jpg");
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+    input{
+        box-shadow:  0 0 10px 5px #ffffff;
+        outline: none;
+        border-radius: 10px;
+        border: 0;
+        backdrop-filter: blur(10px);
+        background-color: transparent;
+        transition: 0.7s;
+    }
+    button{
+        box-shadow:  0 0 10px 5px #ffffff;
+        border: 0;
+        background-color: black;
+        color: white;
+        transition: 1s;
+        cursor: pointer;
+    }
+    input,button{
+        font-weight: 1000;
+        width: 100%;
+        margin: 20px;
+        padding: 10px;
+        font-size: 16px;
+        text-align: center;
+    }
+    input::placeholder{
+        color: black;
+        font-weight: 1000;
+    }
+    button:hover,input:hover{
+        box-shadow:  0 0 15px 10px #ffffff;
+    }
+</style>
 </html>

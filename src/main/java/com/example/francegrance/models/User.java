@@ -1,6 +1,7 @@
 package com.example.francegrance.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,8 +23,16 @@ public class User{
     @Column
     private String password;
     @Column
+    private String email;
+    @Column
     private String role;
+    @Column String phone;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<WishItem> wishItemList;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private List<Order> orders;
 }
