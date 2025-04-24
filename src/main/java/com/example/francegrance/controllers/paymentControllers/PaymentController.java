@@ -10,6 +10,7 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@AllArgsConstructor
 public class PaymentController {
 
     private final OrdersService ordersService;
     private final FragranceService fragranceService;
+
+    public PaymentController(OrdersService ordersService, FragranceService fragranceService) {
+        this.ordersService = ordersService;
+        this.fragranceService = fragranceService;
+    }
+
+    @Value("${stripe.secret.key}")
+    private String apiKey;
     @PostConstruct
     public void init(){
-        Stripe.apiKey = "sk_test_51RH3p2BD0PhDEHfOY8pXLUHOS33uSqmxfYlz6bFhJ6EAgpQ47GLNMqdJcqRg079HJUZwzv7GiFXyNgkQALmS4MA700lsJQcms4";
+        Stripe.apiKey = apiKey;
     }
 
 
