@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -61,5 +62,18 @@ public class OrdersService {
         repo.updateById(orderId,status);
     }
 
+    public List<Order> allRecently() {
+        List<Order> orders = repo.findAll();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        orders = orders.stream()
+                .sorted((a, b) -> {
+                    LocalDateTime dateA = LocalDateTime.parse(a.getCreated_at(), formatter);
+                    LocalDateTime dateB = LocalDateTime.parse(b.getCreated_at(), formatter);
+                    return dateB.compareTo(dateA);
+                })
+                .collect(Collectors.toList());
+
+        return orders;
+    }
 
 }

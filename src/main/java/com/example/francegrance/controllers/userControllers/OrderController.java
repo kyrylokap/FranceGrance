@@ -50,7 +50,7 @@ public class OrderController {
     @GetMapping("/admin/orders")
     public String adminOrders(Model model){
         model.addAttribute("role","ADMIN");
-        model.addAttribute("orders",service.all());
+        model.addAttribute("orders",service.allRecently());
         return "orders";
     }
 
