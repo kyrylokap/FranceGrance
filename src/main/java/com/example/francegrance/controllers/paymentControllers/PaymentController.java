@@ -8,6 +8,7 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,11 +29,11 @@ public class PaymentController {
         this.fragranceService = fragranceService;
     }
 
-    @Value("${stripe.secret.key}")
-    private String apiKey;
+
     @PostConstruct
     public void init(){
-        Stripe.apiKey = apiKey;
+        Dotenv dotenv = Dotenv.load();
+        Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");;
     }
 
 
