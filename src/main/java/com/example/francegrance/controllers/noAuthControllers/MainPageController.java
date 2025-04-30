@@ -38,6 +38,5 @@ public class MainPageController{
         rd.addFlashAttribute("fragrances",fragranceService.searchFragrances(fragranceName,filter));
         return "redirect:/";
     }
-    @GetMapping("/logout")
-    public String logout(){return "logout";}
+
 }

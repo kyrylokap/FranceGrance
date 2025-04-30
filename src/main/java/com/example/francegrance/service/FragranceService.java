@@ -2,6 +2,7 @@ package com.example.francegrance.service;
 
 import com.example.francegrance.models.Fragrance;
 import com.example.francegrance.repository.FragranceRepository;
+import com.example.francegrance.repository.OrdersRepository;
 import com.example.francegrance.repository.WishItemRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -33,9 +34,6 @@ public class FragranceService {
         return "Failed to add fragrance, fragrance already exists!";
     }
 
-    public List<Fragrance> getFragranceByName(String name) {
-        return repo.getFragrancesByNameIgnoreCase(name.toLowerCase());
-    }
 
     public Fragrance getFragranceById(Long id) {
         return repo.findById(id).get();
@@ -102,16 +100,16 @@ public class FragranceService {
 
     @Transactional
     public void deleteFragrance(Long id){
+
         if(repo.existsById(id)){
-            System.out.println("Deleted: " + id);
+            if(!getFragranceById(id).getOrders().isEmpty()){
+                return;
+            }
+
             repo.deleteById(id);
         }
     }
 
     @Transactional
-    public void updateFragrance(Fragrance f){
-       /* repo.updateFragrance(f.getId(), f.getName(),f.getBrand(),f.getDesigner()
-        ,f.getType(),f.getCapacity(),f.getPrice(),f.getPhoto(),f.getAvailableCount());*/
-        repo.save(f);
-    }
+    public void updateFragrance(Fragrance f){repo.save(f);}
 }

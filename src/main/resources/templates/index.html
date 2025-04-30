@@ -10,12 +10,8 @@
 
     <nav th:fragment="navMain">
         <div id="nav-cont" th:fragment="navv" style="display: flex;justify-content:end ;align-items: end;padding-left: 15px">
-
             <div style="cursor: pointer;padding-right:10px ;">
                 <a href="/" ><h1 style="font-weight: 400;">Main Page</h1></a>
-            </div>
-            <div style="cursor: pointer;padding-right:10px;" th:if="${#authentication.name != 'anonymousUser'}">
-                <a th:href="@{/user/orders}"><h1 style="font-weight: 400;">My orders</h1></a>
             </div>
             <div th:if="${role}" style="cursor: pointer;padding-right:10px ;">
                 <a href="/admin"><h1 style="font-weight: 400;">Admin page</h1></a>
@@ -23,7 +19,6 @@
             <div th:if="${#authentication.name != 'anonymousUser'}" style="cursor: pointer;padding-right:10px ;">
                 <a href="/user" ><h1 style="font-weight: 400;" th:text="${#authentication.getName().toUpperCase()}"></h1></a>
             </div>
-
 
         </div>
         <div th:if="${#authentication.name == 'anonymousUser'}" class="auth">
@@ -34,7 +29,14 @@
                 <button type="submit" class="unuseful">Register</button>
             </form>
         </div>
-        <div th:if="${#authentication.name != 'anonymousUser'}">
+        <div th:if="${#authentication.name != 'anonymousUser'}" style="flex-direction: row;display: flex;align-items: center;">
+            <div style="display: flex;align-items: center;justify-content: center;">
+                <a style="padding-right: 50px" th:href="@{/user/orders}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                    </svg>
+                </a>
+            </div>
             <form method="post" th:action="@{/logout}">
                 <button type="submit" class="unuseful">Logout</button>
             </form>
@@ -59,9 +61,7 @@
                     <option value="5">Perfume's</option>
                     <option value="6">From lower capacity</option>
                 </select></div>
-
         </form>
-
 
         <div id="wish-info" th:object="${user}">
             <div th:each="fr: ${fragrances}" class="wish-item">
@@ -73,7 +73,7 @@
                     <p th:text="${fr.capacity}" class="pp"></p>
                     <p th:text="${fr.availableCount}" class="pp"></p>
                     <div id="price" >
-                        <p th:text="${fr.price}"></p>
+                        <p th:text="${fr.price}">a21212112</p>
                         <p>zl</p>
                     </div>
                 </div>
@@ -88,10 +88,9 @@
 
 <style>
     #nav-cont div h1{
-        border-bottom:2px solid #4680ff;
+        border-bottom:2px solid olive;
 
     }
-
     #nav-cont div h1:hover{
         border-bottom:2px solid black ;
         transition:0.7s;
@@ -104,13 +103,10 @@
         font-size: 30px;
 
     }
-
-
     .pp {
         font-size: 19px;
         font-weight: 400;
     }
-
     .pp {
         padding-left: 5px;
         margin-left: 5px;
@@ -126,6 +122,9 @@
     #price,#wish-info,nav, .auth{
         flex-direction: row;
     }
+    .wish-item{
+        justify-content: center;
+    }
 
     #wish-info,.wish-item,#price,nav, .auth{
         align-items: center;
@@ -135,7 +134,7 @@
     }
 
     nav {
-        background-color: #4680ff;
+        background-color: olive;
         height: 120px;
     }
 
@@ -143,9 +142,6 @@
         text-decoration: none;
     }
 
-    option,select{
-        backdrop-filter: blur(10px);
-    }
     button,select,option{
         background-color: transparent;
         font-family: Inter, sans-serif;
@@ -157,53 +153,44 @@
         cursor: pointer;
     }
     .unuseful,select,option{
-
         border-radius: 10px;
     }
     button,nav,a, a:visited {
         color: white;
     }
-
     body {
         background-position: center;
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-size: cover;
-        background-image: url("/images/windows.jpg");
+        background-color: #b9b7a2;
         font-family: Inter, sans-serif;
         height: 100vh;
     }
-
     body, html ,.pp, .inf p {
         margin: 0;
         padding: 0;
     }
 
-    #search {
-        width: 90%;
-    }
-    #search input:hover,
-    .unuseful:hover,
-    select:hover {
-        transition: 0.7s;
-        box-shadow: 0 0 15px 10px #ffffff;
-    }
-    .unuseful,select{
-        border: 0;
-        box-shadow: 0 0 10px 5px #ffffff;
-    }
-    #search input{
-        border: 0;
-    }
-    select{
+    #search input,select{
+        border: 2px solid #000000;
         outline: 0;
     }
 
+    #search {
+        width: 90%;
+    }
+
+    .unuseful:hover{
+        transition: 0.7s;
+        box-shadow: 0 0 15px 10px #ffffff;
+    }
+    .unuseful{
+        border: 0;
+        box-shadow: 0 0 10px 5px #ffffff;
+    }
 
     #search input, #search input::placeholder {
-        backdrop-filter: blur(10px);
-        background-color: transparent;
-        outline: none;
         font-family: Inter, sans-serif;
         font-size: 18px;
         font-weight: 800;
@@ -211,20 +198,20 @@
     #search-button{
         transform: translateX(-146px);
         border-top: 0;
-        border-left: 3px solid white;
+        border-left: 3px solid black;
         border-right: 0;
         border-bottom: 0;
         border-bottom-right-radius:  10px;
         border-top-right-radius:  10px;
     }
-    #search input , #search-button{
+    #search input, #search-button{
         padding: 15px;
     }
     #search input{
-        box-shadow: 0 0 10px 5px white;
         border-radius: 20px;
         width: 40%;
         margin-left: 10px;
+        background-color: transparent;
     }
 
 
@@ -242,13 +229,11 @@
 
     .wish-item {
         flex-direction: column;
-        border: 1px solid black;
         border-radius: 10px;
         width: 200px;
         height: 520px;
         text-align: center;
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(4px);
+        background-color: olive;
     }
 
     .wish-photo {
@@ -273,16 +258,16 @@
     #btn-form button{
         width: 240px;
         border: 1px solid black;
-
     }
-    #search input::placeholder, #search input::placeholder,option,select,.pp, .inf p{
+    #search input::placeholder, #search input::placeholder,option,select{
         color: black;
     }
 
+    .pp, .inf p{
+        color: beige;
+    }
     #btn-form button {
         background-color: black;
     }
-
-
 </style>
 </html>

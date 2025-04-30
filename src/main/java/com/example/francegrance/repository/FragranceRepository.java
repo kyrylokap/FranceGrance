@@ -13,8 +13,6 @@ import java.util.List;
 
 public interface FragranceRepository extends JpaRepository<Fragrance, Long>{
     Fragrance searchFirstByBrandAndCapacityAndPriceAndNameIgnoreCaseAndType(String brand,String capacity,Double price,String name,String type);
-    List<Fragrance> getFragrancesByNameIgnoreCase(String name);
-    Fragrance searchFirstByNameIgnoreCase(String name);
     @Query("SELECT f FROM Fragrance f WHERE " +
             "LOWER(f.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
             "LOWER(f.brand) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
@@ -37,4 +35,5 @@ public interface FragranceRepository extends JpaRepository<Fragrance, Long>{
                          @Param("price") Double price,
                          @Param("photo") String photo,
                          @Param("availableCount") Long availableCount);
+
 }

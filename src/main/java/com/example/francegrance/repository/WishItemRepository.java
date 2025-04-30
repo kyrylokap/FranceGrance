@@ -11,10 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WishItemRepository extends JpaRepository<WishItem,Long>{
-    List<WishItem> findByUserUsername(String username);
     Optional<WishItem>findFirstByFragranceIdAndUserUsername(Long id,String username);
-
-    void deleteWishItemsByFragranceId(Long id);
 
 
 

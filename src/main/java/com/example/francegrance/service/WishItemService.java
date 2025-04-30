@@ -16,28 +16,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class WishItemService {
     private final WishItemRepository repo;
-    private final FragranceRepository frRepo;
     private final UserRepository userRepo;
+    private final FragranceRepository fragranceRepository;
     @Transactional
-    public void addWishItem(Fragrance fr, String username){
+    public void addWishItem(Long fragranceId, String username){
         WishItem wishItem = new WishItem();
-        wishItem.setFragrance(fr);
+        wishItem.setFragrance(fragranceRepository.findById(fragranceId).get());
         wishItem.setUser(userRepo.findByUsername(username));
         repo.save(wishItem);
-    }
-    public List<WishItem> findByUsername(String username){
-        return userRepo.findByUsername(username).getWishItemList();
-    }
-    public Fragrance findByName(String name){
-        return frRepo.searchFirstByNameIgnoreCase(name.toLowerCase());
-    }
-
-    public Fragrance findById(Long id){
-        return frRepo.findById(id).get();
-    }
-
-    public boolean fragranceExists(Long id){
-        return frRepo.existsById(id);
     }
 
     @Transactional

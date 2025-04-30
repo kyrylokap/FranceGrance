@@ -18,7 +18,7 @@ public class OrderController {
     @GetMapping("/user/orders")
     public String userOrders(Model model,Authentication auth){
 
-        model.addAttribute("orders",service.findAllByUserName(auth.getName()));
+        model.addAttribute("orders",service.allRecently(auth.getName()));
         model.addAttribute("role","USER");
         return "orders";
     }
@@ -50,7 +50,7 @@ public class OrderController {
     @GetMapping("/admin/orders")
     public String adminOrders(Model model){
         model.addAttribute("role","ADMIN");
-        model.addAttribute("orders",service.allRecently());
+        model.addAttribute("orders",service.allRecently(null));
         return "orders";
     }
 

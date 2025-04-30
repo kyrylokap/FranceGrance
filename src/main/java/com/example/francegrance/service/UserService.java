@@ -1,6 +1,5 @@
 package com.example.francegrance.service;
 
-import com.example.francegrance.models.Fragrance;
 import com.example.francegrance.models.User;
 import com.example.francegrance.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -63,6 +62,20 @@ public class UserService{
         if(username.isEmpty()){
             repo.updateUserById(repo.findByUsername(username).getId(),phone,email);
         }
+    }
+
+    public boolean changeUsername(Long userId,String username){
+        User user = repo.findById(userId).get();
+        if(repo.findByUsername(username) != null){return false;}
+        user.setUsername(username);
+        repo.save(user);
+        return true;
+    }
+
+    public void changePassword(Long userId,String password){
+        User user = repo.findById(userId).get();
+        user.setPassword(passwordEncoder.encode(password));
+        repo.save(user);
     }
 
 }

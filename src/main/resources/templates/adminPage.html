@@ -11,18 +11,22 @@
         <div style="cursor: pointer;padding-right:10px ;">
             <a href="/" ><h1 style="font-weight: 400;">Main Page</h1></a>
         </div>
-        <div style="cursor: pointer;padding-right:10px ;">
-            <a th:href="@{/user/orders}"><h1 style="font-weight: 400;">My orders</h1></a>
-        </div>
-        <div th:if="${role}" style="cursor: pointer;padding-right:10px ;">
+        <div th:if="${role}" style="cursor: pointer;padding-right:10px;">
             <a href="/admin"><h1 style="font-weight: 400;">Admin page</h1></a>
         </div>
-
         <div th:if="${#authentication.name != 'anonymousUser'}" style="cursor: pointer;padding-right:10px ;">
             <a href="/user" ><h1 style="font-weight: 400;" th:text="${#authentication.getName().toUpperCase()}"></h1></a>
         </div>
     </div>
-    <div th:if="${#authentication.name != 'anonymousUser'}">
+
+    <div th:if="${#authentication.name != 'anonymousUser'}" style="flex-direction: row;display: flex;align-items: center;">
+        <div style="display: flex;align-items: center;justify-content: center;">
+            <a style="padding-right: 50px" th:href="@{/user/orders}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+            </a>
+        </div>
         <form method="post" th:action="@{/logout}">
             <button id="logout" type="submit">Logout</button>
         </form>
@@ -47,7 +51,7 @@
 </body>
 <style>
     #nav-cont div h1{
-        border-bottom:2px solid #4680ff;
+        border-bottom:2px solid olive;
         transition:0.7s;
     }
 
@@ -63,14 +67,14 @@
         text-align: center;
         border-radius: 20px;
         backdrop-filter: blur(10px);
-        box-shadow: 0 0 10px 5px white;
+        box-shadow: 0 0 10px 5px olive;
         margin: 20px;
         border: 1px solid black;
         width: 200px;
     }
-    main>div:hover{
+    .cont:hover{
         transition: 1s;
-        background-color: white;
+        background-color: olive;
     }
      main>div>a>h1{
          font-weight: 100;
@@ -87,9 +91,7 @@
         background-position: center;
         background-attachment: fixed;
         font-family: Inter,sans-serif;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url("/images/windows.jpg");
+        background-color: #b9b7a2;
         justify-content: center;
         margin: 0;
         padding: 0;
@@ -100,7 +102,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        background-color: #4680ff;
+        background-color: olive;
         color: transparent;
         height: 120px;
     }

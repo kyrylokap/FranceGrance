@@ -7,7 +7,7 @@
 </head>
 <body>
 <form method="get" th:action="@{/}">
-    <h1 th:text="${message}" ></h1>
+    <h1 th:text="${message}" >assaasa</h1>
     <button>Go to main page</button>
 </form>
 
@@ -20,12 +20,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-image: url("/images/windows.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-color: #b9b7a2;
 
     }
-    body,button{
+    body,button,h1{
         font-family: Inter,sans-serif;
         font-weight: 600;
     }
@@ -33,11 +31,11 @@
 
     h1{
         flex-wrap: wrap;
-        color: #3f0b0b;
+        color: #b9b7a2;
     }
     form{
         padding: 60px;
-        backdrop-filter: blur(10px);
+        background-color: olive;
         box-shadow: 0 0 10px 5px white;
         border-radius: 10px;
         display: flex;
@@ -48,10 +46,14 @@
         border-radius:10px;
         width:150px;
         padding: 10px;
-        background-color: transparent;
+        background-color: black;
+        color: white;
         border: 0;
-        box-shadow: 0 0 10px 5px white;
         cursor: pointer;
+    }
+    button:hover{
+        box-shadow: 0 0 10px 5px white;
+        transition: 0.7s;
     }
 
 </style>

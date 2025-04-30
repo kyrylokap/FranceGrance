@@ -11,26 +11,50 @@
         <div style="cursor: pointer;padding-right:10px ;">
             <a href="/" ><h1 style="font-weight: 400;">Main Page</h1></a>
         </div>
-        <div style="cursor: pointer;padding-right:10px ;">
-            <a th:href="@{/user/orders}"><h1 style="font-weight: 400;">My orders</h1></a>
-        </div>
-        <div th:if="${role}" style="cursor: pointer;padding-right:10px ;">
+        <div th:if="${role}" style="cursor: pointer;padding-right:10px;">
             <a href="/admin"><h1 style="font-weight: 400;">Admin page</h1></a>
         </div>
-
         <div th:if="${#authentication.name != 'anonymousUser'}" style="cursor: pointer;padding-right:10px ;">
             <a href="/user" ><h1 style="font-weight: 400;" th:text="${#authentication.getName().toUpperCase()}"></h1></a>
         </div>
-
     </div>
-    <div th:if="${#authentication.name != 'anonymousUser'}">
+
+    <div th:if="${#authentication.name != 'anonymousUser'}" style="flex-direction: row;display: flex;align-items: center;">
+        <div style="display: flex;align-items: center;justify-content: center;">
+            <a style="padding-right: 50px" th:href="@{/user/orders}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+            </a>
+        </div>
         <form method="post" th:action="@{/logout}">
             <button id="logout" type="submit">Logout</button>
         </form>
     </div>
 </nav>
 <div id="main">
-    <h1>Wishlist</h1>
+    <div id="user" style="border: 1px solid olive;display: flex;flex-direction: column;justify-content: center;align-items: center">
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="135" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+            <form th:action="@{/user/change-username}" method="post">
+                <label>
+                    Username
+                    <input placeholder="Username" name="username" th:value="${user.username}">
+                </label>
+                <input type="hidden" th:value="${user.id}" name="userId">
+                <button class="user-btn" type="submit">Change username</button>
+            </form>
+            <form th:action="@{/user/change-password}" method="post" >
+                <label>
+                    <input type="password" placeholder="Password" name="password">
+                </label>
+                <input type="hidden" th:value="${user.id}" name="userId">
+                <button class="user-btn" type="submit">Change password</button>
+            </form>
+    </div>
+    <h1 style="color: black">Wishlist</h1>
     <div id="wish-info" th:object="${user}">
             <div th:each="wish: ${user.getWishItemList()}" class="wish-item">
                     <img th:src="${wish.fragrance.photo}" alt="fragrance photo" class="wish-photo"/>
@@ -61,42 +85,78 @@
         </div>
 </body>
 <style>
+
+    #user input{
+        width: 70%;
+        padding: 5px;
+        border-radius: 10px;
+        border: 1px solid beige;
+        background-color: #b9b7a2;
+        outline: 0;
+    }
+    #user input:hover{
+        box-shadow: 0 0 4px 2px white;
+        transition: 0.7s;
+    }
+
+    #user{
+        width: 160px;
+        background-color: #949457;
+    }
+    label,.user-btn{
+        font-family: Inter,sans-serif;
+        font-weight: 600;
+    }
+    label{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+    }
+    .user-btn{
+        cursor: pointer;
+        padding: 10px;
+        color: white;
+        background-color: black;
+        border: 0;
+        border-radius: 10px;
+    }
     #nav-cont div h1{
-        border-bottom:2px solid #4680ff;
-        transition:0.7s;
+        border-bottom:2px solid olive;
     }
 
     #nav-cont div h1:hover{
         border-bottom:2px solid black ;
     }
     nav{
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          background-color: #4680ff;
-          color: transparent;
-          height: 120px;
-      }
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        background-color: olive;
+        color: transparent;
+        height: 120px;
+    }
 
     nav h1:hover,.btn:hover,#logout:hover{
         transition: 0.7s;
     }
     #btn-remove{
-        border: 2px solid #3e0e13;
+        border: 2px solid black;
     }
     #btn-buy{
-        border: 2px solid #0f480c;
+        background-color: black;
+        border: 2px solid black;
     }
     #btn-remove:hover{
-        box-shadow: 0 0 5px 5px #3e0e13;
-        border: 2px solid #3e0e13;
-        color: #3e0e13;
+        border-color: white;
     }
     #btn-buy:hover{
-        box-shadow: 0 0 5px 5px #0f480c;
-        border: 2px solid #0f480c;
+        box-shadow: 0 0 5px 5px #000000;
+        border: 2px solid #ffffff;
     }
+
     .pp{
         padding-left: 5px;
         margin-left: 5px;
@@ -135,15 +195,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 1px solid black;
         border-radius: 10px;
         max-width: 200px;
         min-width: 200px;
         max-height: 520px;
         min-height: 520px;
         text-align: center;
-        background: rgba(255,255,255,0.05);
-        backdrop-filter: blur(4px);
+        color: beige;
+        background-color: olive;
     }
 
     #wish-info {
@@ -171,15 +230,13 @@
         background-position: center;
         background-attachment: fixed;
         font-family: Inter,sans-serif;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url("/images/windows.jpg");
+        background-color: #b9b7a2;
         justify-content: center;
         margin: 0;
         padding: 0;
         height: 100vh;
     }
-    /*nav,*/#wish-info,#price,.buttons{
+    #wish-info,#price,.buttons{
         display: flex;
         flex-direction: row;
         align-items: center;

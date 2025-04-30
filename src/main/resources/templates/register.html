@@ -36,9 +36,7 @@
     body{
         height: 100vh;
         margin: 0;
-        background-image: url("/images/home.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-color: #b9b7a2;
     }
     body,#register{
         display: flex;
@@ -48,8 +46,8 @@
     }
 
     #register{
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 15px 10px #ffffff;
+        background-color: #97974e;
+        box-shadow: 0 0 10px 5px #ffffff;
         padding: 20px;
 
     }
@@ -71,20 +69,21 @@
     }
     input{
         background-color: transparent;
-        box-shadow: 0 0 10px 5px white;
+        border: 1px solid beige;
         outline: none;
     }
-    input,button{
-        transition: 0.7s;
+    button{
         border: 0;
     }
     button:hover{
         color: darkgray;
         box-shadow: 0 0 10px 5px white;
+        transition: 0.7s;
     }
 
     input:hover{
-        box-shadow: 0 0 15px 10px white;
+        transition: 0.7s;
+        box-shadow: 0 0 10px 5px white;
     }
 
 </style>

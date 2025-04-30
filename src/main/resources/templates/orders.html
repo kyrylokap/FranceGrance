@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<nav style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 120px;position: absolute;top: 0;left: 0;">
+<nav style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 60px;position: absolute;top: 0;left: 0;background-color: olive;">
     <a th:if="${role == 'USER'}" th:href="@{/user}" style="cursor: pointer;text-decoration: none">
         <h1 style="font-size: 30px;margin: 0;display: flex;align-items: center">
             <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
@@ -21,7 +21,7 @@
         <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 3 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
         </svg>
-        Back To Admin Page
+        To Admin Page
     </h1>
     </a>
 </nav>
@@ -82,7 +82,7 @@
         cursor: pointer;
     }
     select,option{
-        backdrop-filter: blur(10px);
+
         background-color: transparent;
     }
     .status a{
@@ -138,7 +138,7 @@
         width: 17%;
     }
     .created,.user,.place{
-        border-right: 1px solid white;
+        border-right: 1px solid black;
     }
     .l1{
         text-align: center;
@@ -148,10 +148,10 @@
         width: 5%;
     }
     .l1{
-        border-left: 1px solid white;
+        border-left: 1px solid black
     }
     .l1{
-        border-right: 1px solid white;
+        border-right: 1px solid black;
     }
     .created,.user,.place,.fragrance{
         height: 70px;
@@ -167,9 +167,10 @@
     }
     main{
         margin-top: 120px;
+
     }
     .order{
-        border-top:1px solid white;
+        border-bottom:1px solid black;
         display: flex;
         width: 100%;
     }
@@ -196,9 +197,7 @@
     body{
         background-attachment: fixed;
         height: 100%;
-        background-image: url("/images/windows.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-color: #b9b7a2;
     }
 
 </style>

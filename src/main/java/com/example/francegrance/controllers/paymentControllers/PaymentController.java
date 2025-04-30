@@ -10,8 +10,6 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +48,9 @@ public class PaymentController {
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .setSuccessUrl("http://localhost:9191/payment-success?order_id=" + order.getId())
-                .setCancelUrl("http://localhost:9191/payment-cancel")
+                .setCancelUrl("http://localhost:9191/payment-cancel?order_id=" + order.getId())
+                //.setSuccessUrl("https://3ff2-2a02-a315-41af-9800-f81f-df1c-3a3b-38bf.ngrok-free.app/payment-success?order_id=" + order.getId())
+                //.setCancelUrl("https://3ff2-2a02-a315-41af-9800-f81f-df1c-3a3b-38bf.ngrok-free.app/payment-cancel?order_id=" + order.getId())
                 .addLineItem(
                         SessionCreateParams.LineItem.builder()
                                 .setQuantity(1L)
@@ -83,7 +83,8 @@ public class PaymentController {
         return "payment-success";
     }
     @GetMapping("/payment-cancel")
-    public String paymentSuccess(Model model){
+    public String paymentCancel(@RequestParam("order_id")Long orderId,Model model){
+        ordersService.changeStatus(orderId,"Cancelled");
         model.addAttribute("message","Payment failed, or no fragrance don't available");
         return "payment-cancel";
     }

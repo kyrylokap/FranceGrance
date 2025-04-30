@@ -73,7 +73,7 @@ public class AdminController{
 
     @PostMapping("/removed")
     public String removed(@RequestParam Long id){
-        System.out.println(id);
+
         service.deleteFragrance(id);
         return "redirect:/admin/view";
     }

@@ -11,7 +11,7 @@
 <div id="main">
     <form id="search" th:action="@{/admin/search}" method="post">
         <input type="search" placeholder="Search fragrance..." autocomplete="off" name="name" >
-        <button type="submit" id="search-button">
+        <button type="submit" id="search-button" >
             <svg style="color: black" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
@@ -48,6 +48,12 @@
 </div>
 </body>
 <style>
+    #search input::placeholder{
+        color: black;
+    }
+    p{
+        color: beige;
+    }
     .buttons,.btn-form{
         display: flex;
         align-items: start;
@@ -86,11 +92,12 @@
         flex-direction: row;
     }
 
-    #fragrances,.wish-item,#price,nav{
+    #fragrances,.wish-item,#price{
         align-items: center;
     }
     nav {
-        justify-content: space-between;
+        justify-content: start;
+        align-items: start;
     }
 
     nav {
@@ -124,9 +131,7 @@
         body {
             background-position: center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-image: url("/images/windows.jpg");
+            background-color: #b9b7a2;
             font-family: Inter, sans-serif;
             height: 100vh;
         }
@@ -141,44 +146,45 @@
         #search {
             width: 90%;
         }
-        #search input:hover,
+
         .btn:hover,
         select:hover {
             transition: 0.7s;
             box-shadow: 0 0 15px 10px #ffffff;
         }
-        #search input,.btn,select{
+        .btn,select{
             border: 0;
             box-shadow: 0 0 10px 5px #ffffff;
         }
         select{
             outline: 0;
         }
-        #search input:hover,.btn:hover,select{
+        .btn:hover,select{
             box-shadow: 0 0 15px 10px #ffffff;
         }
         #search-button{
             border: 0;
-            border-left: 4px solid white;
+            border-left: 4px solid black;
         }
         #search input, #search input::placeholder {
-            backdrop-filter: blur(10px);
-            background-color: transparent;
             outline: none;
             font-family: Inter, sans-serif;
             font-size: 18px;
             font-weight: 800;
         }
         #search-button{
-            transform: translateX(-146px);
+            transform: translateX(-106px);
         }
         #search input , #search-button{
             padding: 15px;
         }
         #search input{
+            background-color: transparent;
+            border: 2px solid #000000;
             width: 40%;
             margin-left: 10px;
-            border-radius: 10px;
+            border-radius: 20px;
+            color: black;
         }
 
 
@@ -194,15 +200,14 @@
         }
 
 
-        .wish-item {
+        .wish-item{
             flex-direction: column;
-            border: 1px solid black;
+            color: beige;
             border-radius: 10px;
             width: 200px;
             height: 520px;
             text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(4px);
+            background-color: olive;
         }
 
         .wish-photo {
@@ -231,8 +236,8 @@
             border: 1px solid black;
 
         }
-        #search input::placeholder, #search input::placeholder,option,select,.pp, .inf p{
-            color: black;
+        option,select,.pp, .inf p{
+            color: beige;
         }
 
         .btn-form button {

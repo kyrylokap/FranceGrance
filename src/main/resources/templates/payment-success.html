@@ -20,9 +20,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-image: url("/images/windows.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-color: #b9b7a2;
 
     }
     body,button{
@@ -33,11 +31,11 @@
 
     h1{
         flex-wrap: wrap;
-        color: #122f04;
+        color: #b9b7a2;
     }
     form{
         padding: 60px;
-        backdrop-filter: blur(10px);
+        background-color: olive;
         box-shadow: 0 0 10px 5px white;
         border-radius: 10px;
         display: flex;
@@ -49,10 +47,14 @@
         width:150px;
         padding: 10px;
         background-color: transparent;
-        border: 0;
-        box-shadow: 0 0 10px 5px white;
+        border: 1px solid beige;
         cursor: pointer;
     }
+    button:hover{
+        transition: 0.7s;
+        box-shadow: 0 0 10px 5px beige;
+    }
+
 
 </style>
 </html>

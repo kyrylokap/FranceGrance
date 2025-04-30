@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<nav th:fragment="navD" style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 60px;position: absolute;top: 0;left: 0;">
+<nav th:fragment="navD" style="text-align: left;display: flex;justify-content:start;width: 100%;padding: 0;height: 60px;position: absolute;top: 0;left: 0;background-color: olive">
     <a th:href="@{/admin}" style="cursor: pointer;text-decoration: none">
         <h1 style="font-size: 30px;margin: 0;display: flex;align-items: center">
             <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
@@ -33,7 +33,7 @@
             <input type="text" placeholder="Capacity" th:field="${fragrance.capacity}">
             <input type="text" placeholder="Price" th:field="${fragrance.price}">
             <input type="text" placeholder="Photo" th:field="${fragrance.photo}">
-            <div style="width: 100%;flex-direction: row;display: flex;justify-content: center;align-items: center;border: 1px solid white;border-radius: 30px" >
+            <div style="width: 100%;flex-direction: row;display: flex;justify-content: center;align-items: center;border-radius: 30px" >
                 <input type="range" id="range"  th:field="${fragrance.availableCount}" min="1" max="200" style="width: 50%">
                 <div style="margin: 10px;"><p id="count" ></p></div>
             </div>
@@ -46,6 +46,10 @@
     </div>
 </body>
 <style>
+    input,select,input::placeholder{
+        background-color: #b9b7a2;
+        color: black;
+    }
     a:visited,a{
         color: white;
     }
@@ -61,6 +65,7 @@
     }
     h1{
         font-size: 50px;
+        color: white;
     }
     input,select{
         border: 1px solid #ffffff;
@@ -82,7 +87,8 @@
         flex-direction: column;
     }
     #div-add{
-        box-shadow: 0 0 10px 10px #ffffff;
+        box-shadow: 0 0 10px 5px #ffffff;
+        background-color: olive;
         border-radius: 25px;
         width: 400px;
         padding-left: 30px;
@@ -90,9 +96,7 @@
     }
     body{
         height: 100vh;
-        background-image: url("/images/windows.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-color: #b9b7a2;
         margin: 0;
         padding: 0;
     }
@@ -102,11 +106,9 @@
         text-align: center;
         outline: none;
         border-radius: 10px;
-        color: #4054b2;
-
-        backdrop-filter: blur(10px);
-        background-color: transparent;
-        transition: 0.7s;
+    }
+    select,input{
+        color: black;
     }
     button{
         width: 90%;
@@ -114,19 +116,21 @@
         background-color: black;
         color: white;
         transition: 0.7s;
+        border: 0;
     }
-    input::placeholder,input,select,option{
-        color: #07122f;
+    option{
+        color: black;
+    }
+
+    input::placeholder,input,select{
         font-size: 17px;
         font-weight: 1000;
     }
     button:hover,input:hover,select:hover{
-        box-shadow:  0 0 10px 10px #ffffff;
-    }
-    h1:hover{
-        color: #a5a5a5;
+        box-shadow:  0 0 10px 3px #ffffff;
         transition: 0.7s;
     }
+
 
 </style>
 <script>

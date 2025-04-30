@@ -17,7 +17,7 @@
 
     <form method="post" th:action="@{/user/orders/process-order}" th:object="${order}">
         <input type="hidden" name="fragranceId" th:value="${fragranceId}">
-        <h1>Place order</h1>
+        <h1>Order</h1>
         <div id="person-info">
             <input type="text" placeholder="Name" th:field="${order.name}" required>
             <input type="text" placeholder="Surname" th:field="${order.surname}" required>
@@ -40,7 +40,9 @@
     form div{
         background-color: transparent;
     }
-
+    button{
+        cursor: pointer;
+    }
 
     body,html{
         margin: 0;
@@ -48,9 +50,7 @@
     }
     body{
         height: 100vh;
-        background-image: url("/images/windows.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-color: olive;
     }
     body,form,#person-info,#placement,#smaller{
         display: flex;
@@ -71,7 +71,7 @@
         background-color: black;
     }
     form{
-        backdrop-filter: blur(10px);
+       background-color: #5d5d00;
         border-radius: 30px;
         width: 350px;
         padding-bottom: 20px;
@@ -84,8 +84,11 @@
     button{
         color: white;
     }
-    input::placeholder,input,form h1{
+    form h1{
         color: black;
+    }
+    input::placeholder,input{
+        color: beige;
     }
     h1{
         font-size: 60px;

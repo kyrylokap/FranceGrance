@@ -41,18 +41,6 @@ public class OrdersService {
     }
 
 
-    public List<Order> findAllByUserName(String username){
-        return repo.findAllByUserId(userRepository.findByUsername(username).getId());
-    }
-    public List<Order> findAllByFragranceName(String fragranceName){
-
-        return repo.findAllByFragranceName(fragranceName);
-    }
-
-    public List<Order> all(){
-        return repo.findAll();
-    }
-
 
     public Order findById(Long id){
         return repo.findById(id).get();
@@ -62,8 +50,10 @@ public class OrdersService {
         repo.updateById(orderId,status);
     }
 
-    public List<Order> allRecently() {
+    public List<Order> allRecently(String username) {
         List<Order> orders = repo.findAll();
+        if(username != null)orders = repo.findAllByUserId(userRepository.findByUsername(username).getId());
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         orders = orders.stream()
                 .sorted((a, b) -> {
