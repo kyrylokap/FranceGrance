@@ -25,6 +25,6 @@ This is a web application. You can deploy it on a Java servlet container like **
 ### Steps:
 
 ```bash
-git clone https://github.com/yourusername/francegrance.git
+git clone https://github.com/kyrylokap/francegrance.git
 cd francegrance
 # Open in your IDE, build the project, and run the application
